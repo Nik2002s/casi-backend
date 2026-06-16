@@ -12,10 +12,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from psycopg2 import pool as pgpool
 
-DB_URL = os.environ.get(
-    'DATABASE_URL',
-    'postgresql://casi:casi@localhost:5432/casi',
-)
+DB_URL = os.environ.get('DATABASE_URL')
 
 # ── Enforce TLS for remote PostgreSQL connections ────────────────────────────
 # Railway / Postgres providers use URLs starting with postgres:// or postgresql://.
