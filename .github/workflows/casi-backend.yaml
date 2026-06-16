@@ -63,7 +63,7 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
           ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
-          DOCKER_IMAGE_URL: ${{ secrets.DOCKER_USERNAME }}/casi-frontend:${{ steps.version.outputs.NEW_VERSION }}
+          DOCKER_IMAGE_URL: ${{ secrets.DOCKER_USERNAME }}/casi-backend:${{ steps.version.outputs.NEW_VERSION }}
         run: |
           # Step 1: Update the Docker image source
           curl --fail --silent -X POST "https://backboard.railway.com/graphql/v2" \
