@@ -54,3 +54,25 @@ jobs:
       - name: Push Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/casi-backend:${{ steps.version.outputs.NEW_VERSION }}
+
+
+##Deploy to railway
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+          ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
+          DOCKER_IMAGE_URL: ${{ secrets.DOCKER_USERNAME }}/casi-frontend:${{ steps.version.outputs.NEW_VERSION }}
+        run: |
+          # Step 1: Update the Docker image source
+          curl --fail --silent -X POST "https://backboard.railway.com/graphql/v2" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -d "{\"query\":\"mutation ServiceInstanceUpdate(\$serviceId: String!, \$environmentId: String!, \$input: ServiceInstanceUpdateInput!) { serviceInstanceUpdate(serviceId: \$serviceId, environmentId: \$environmentId, input: \$input) }\",\"variables\":{\"serviceId\":\"$SERVICE_ID\",\"environmentId\":\"$ENVIRONMENT_ID\",\"input\":{\"source\":{\"image\":\"$DOCKER_IMAGE_URL\"}}}}"
+      
+          # Step 2: Deploy the new image
+          curl --fail --silent -X POST "https://backboard.railway.com/graphql/v2" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -d "{\"query\":\"mutation serviceInstanceDeployV2(\$serviceId: String!, \$environmentId: String!) { serviceInstanceDeployV2(serviceId: \$serviceId, environmentId: \$environmentId) }\",\"variables\":{\"serviceId\":\"$SERVICE_ID\",\"environmentId\":\"$ENVIRONMENT_ID\"}}"
