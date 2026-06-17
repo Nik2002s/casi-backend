@@ -90,6 +90,13 @@ DEFAULT_LIMITS = {
 
 _SCHEMA = """
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE TABLE IF NOT EXISTS allowed_users (
+    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email      TEXT UNIQUE NOT NULL,
+    added_by   TEXT,
+    added_at   TIMESTAMP DEFAULT NOW(),
+    last_login TIMESTAMP
+);
 
 -- Projects
 CREATE TABLE IF NOT EXISTS projects (
