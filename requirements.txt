@@ -8,4 +8,4 @@ psycopg2-binary~=2.9.12
 requests~=2.33.1
 anthropic~=0.97.0
 gunicorn~=21.2
-firebase-admin~=6.5
+firebase-admin~=7.4
