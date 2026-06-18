@@ -2,9 +2,12 @@ name: Casi Backend Workflow For PROD
  
 on:
   workflow_dispatch:
+  repository_dispatch: # allows triggering from another workflow
+
   push:
     branches:
       - main
+
  
 jobs:
   build:
