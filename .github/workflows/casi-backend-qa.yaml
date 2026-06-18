@@ -104,7 +104,7 @@ jobs:
       - name: Trigger Prod Workflow
         run: |
           curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/casi-backend-prod.yaml/dispatches \
             -d "{\"ref\":\"main\"}"
