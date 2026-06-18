@@ -99,7 +99,7 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
           ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
-          DOCKER_IMAGE_URL: ${{ secrets.DOCKER_USERNAME }}/casi-backend:${{ needs.build.outputs.version }}
+          DOCKER_IMAGE_URL: ${{ secrets.DOCKER_USERNAME }}/casi-backend-prod:${{ needs.build.outputs.version }}
         run: |
           curl --fail --silent -X POST "https://backboard.railway.com/graphql/v2" \
             -H "Content-Type: application/json" \
