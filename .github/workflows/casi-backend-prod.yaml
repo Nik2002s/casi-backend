@@ -2,13 +2,11 @@ name: Casi Backend Workflow For PROD
  
 on:
   workflow_dispatch:
-    inputs:
-      commit_sha:
-        required: true
+  repository_dispatch: # allows triggering from another workflow
 
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
  
 jobs:
@@ -110,4 +108,4 @@ jobs:
           curl --fail --silent -X POST "https://backboard.railway.com/graphql/v2" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $RAILWAY_TOKEN" \
-            -d "{\"query\":\"mutation serviceInstanceDeployV2(\$serviceId: String!, \$environmentId: String!) { serviceInstanceDeployV2(serviceId: \$serviceId, environmentId: \$environmentId) }\",\"variables\":{\"serviceId\":\"$SERVICE_ID\",\"environmentId\":\"$ENVIRONMENT_ID\"}}"
+            -d "{\"query\":\"mutation serviceInstanceDeployV2(\$serviceId: String!, \$environmentId: String!) { serviceInstanceDeployV2(serviceId: \$serviceId, environmentId: \$environmentId) }\",\"variables\":{\"serviceId\":\"$SERVICE_ID\",\"environmentId\":\"$ENVIRONMENT_ID\"}}" 
