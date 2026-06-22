@@ -99,21 +99,6 @@ jobs:
   #   needs: manual-approval
   #   runs-on: ubuntu-latest
 
-<<<<<<< HEAD
-    steps:
-      - name: Trigger Prod Workflow
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${{ github.repository }}/actions/workflows/casi-backend-prod.yaml/dispatches \
-            -d "{
-              \"ref\":\"${{ github.ref_name }}\",
-              \"inputs\": {
-                \"commit_sha\": \"${{ github.sha }}\"
-              }
-            }"  
-=======
   #   steps:
   #     - name: Trigger Prod Workflow
   #       run: |
@@ -127,4 +112,3 @@ jobs:
   #               \"commit_sha\": \"${{ github.sha }}\"
   #             }
   #           }" 
->>>>>>> release/1.0.1
