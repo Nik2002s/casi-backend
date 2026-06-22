@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/*
+      - develop
 
 jobs:
   build:
@@ -83,32 +83,32 @@ jobs:
             -d "{\"query\":\"mutation serviceInstanceDeployV2(\$serviceId: String!, \$environmentId: String!) { serviceInstanceDeployV2(serviceId: \$serviceId, environmentId: \$environmentId) }\",\"variables\":{\"serviceId\":\"$SERVICE_ID\",\"environmentId\":\"$ENVIRONMENT_ID\"}}"
 
   # 🔒 Manual Approval Step
-  manual-approval:
-    needs: ["build", "deploy-qa"]
-    runs-on: ubuntu-latest
+  # manual-approval:
+  #   needs: ["build", "deploy-qa"]
+  #   runs-on: ubuntu-latest
 
-    environment:
-      name: production   # MUST match your GitHub Environment
+  #   environment:
+  #     name: production   # MUST match your GitHub Environment
 
-    steps:
-      - name: Wait for Approval
-        run: echo "Approval required to proceed to PROD"
+  #   steps:
+  #     - name: Wait for Approval
+  #       run: echo "Approval required to proceed to PROD"
 
-  # 🚀 Trigger PROD workflow
-  trigger-prod:
-    needs: manual-approval
-    runs-on: ubuntu-latest
+  # # 🚀 Trigger PROD workflow
+  # trigger-prod:
+  #   needs: manual-approval
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Trigger Prod Workflow
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${{ github.repository }}/actions/workflows/casi-backend-prod.yaml/dispatches \
-            -d "{
-              \"ref\":\"${{ github.ref_name }}\",
-              \"inputs\": {
-                \"commit_sha\": \"${{ github.sha }}\"
-              }
-            }" 
+  #   steps:
+  #     - name: Trigger Prod Workflow
+  #       run: |
+  #         curl -X POST \
+  #           -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+  #           -H "Accept: application/vnd.github+json" \
+  #           https://api.github.com/repos/${{ github.repository }}/actions/workflows/casi-backend-prod.yaml/dispatches \
+  #           -d "{
+  #             \"ref\":\"${{ github.ref_name }}\",
+  #             \"inputs\": {
+  #               \"commit_sha\": \"${{ github.sha }}\"
+  #             }
+  #           }" 
