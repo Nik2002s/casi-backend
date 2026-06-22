@@ -2,14 +2,14 @@ name: Casi Backend Workflow For PROD
  
 on:
   workflow_dispatch:
-    inputs:
-      commit_sha:
-        required: true
+    # inputs:
+    #   commit_sha:
+    #     required: true
   # repository_dispatch: # allows triggering from another workflow
 
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
  
 jobs:
